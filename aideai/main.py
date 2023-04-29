@@ -1,20 +1,21 @@
-from flask import Flask
+from flask import Flask, url_for
 from flask import request
 import pandas as pd
 import sys
-import multiprocessing
-app = Flask(__name__)
-
+# import multiprocessing
+import monaitrain
+import monaitest
 import time
-import requests
-import rq
+# import requests
+# import rq
 from worker import conn
-queue = rq.Queue(connection=conn,default_timeout=3600)
+app = Flask(__name__)
+# queue = rq.Queue(connection=conn,default_timeout=3600)
 
-def predict_liver(uploaded_file_url):
-    # run_ds(uploaded_file_url)
-    pass
-
+@app.route('/outputurl')
+def outputurl():
+    media_url = 'http://192.168.1.3:8082/media/liver/output1.png'
+    return {"output": media_url}
 
 @app.route("/")
 def home():
@@ -22,9 +23,9 @@ def home():
 
 @app.route('/predict_liver_segment',methods=['POST'])
 def predict_liver_segment():
-    print("test the video with parameters : ", str(request.args))
-    # uploaded_file_url = request.args['liver_path']
-    # res = predict_liver(uploaded_file_url)
+    print("test the 3d image", str(request.args))
+    data = request.args.get('data')
+    monaitest.testing(data)
     return {"status": "ok"}
 
 

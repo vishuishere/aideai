@@ -26,7 +26,9 @@ def predict_liver_segment():
     print("test the 3d image", str(request.args))
     data = request.args.get('data')
     monaitest.testing(data)
-    return {"status": "ok"}
+    url = 'http://192.168.1.3:8082/'
+    media_url = url + 'media/'+data+'/output1.png'
+    return {"output": media_url}
 
 
 if __name__ == "__main__":

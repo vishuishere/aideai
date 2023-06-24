@@ -9,13 +9,13 @@ from utilities import train
 
 def training(data):
     data_train = {'brain': 'dataset3d/Task01_BrainTumour/Data_Train_Test', 'heart': 'dataset3d/Task02_Heart/Data_Train_Test', 'liver': 'dataset3d/Task03_Liver/Data_Train_Test'}
-
-    if data=="brain":
-        model_dir = 'resultsbrain' 
-    elif data=="heart":
-        model_dir = 'resultsheart' 
-    else:
-        model_dir = 'resultsliver' 
+    model_dir = 'results' + str(data).lower()
+    # if data=="brain":
+    #     model_dir = 'resultsbrain' 
+    # elif data=="heart":
+    #     model_dir = 'resultsheart' 
+    # else:
+    #     model_dir = 'resultsliver' 
 
     data_dir = data_train[data.lower()]
 
@@ -36,7 +36,7 @@ def training(data):
     #loss_function = DiceCELoss(to_onehot_y=True, sigmoid=True, squared_pred=True, ce_weight=calculate_weights(1792651250,2510860).to(device))
     loss_function = DiceLoss(to_onehot_y=True, sigmoid=True, squared_pred=True)
     optimizer = torch.optim.Adam(model.parameters(), 1e-5, weight_decay=1e-5, amsgrad=True)
-    train(model, data_in, loss_function, optimizer, 60, model_dir)
+    train(model, data_in, loss_function, optimizer, 600, model_dir)
 
 if __name__ == '__main__':
     data = input("Enter the desired training: ")

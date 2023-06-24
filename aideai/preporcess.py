@@ -68,6 +68,17 @@ def dcm2nifti(in_dir, out_dir):
         dicom2nifti.dicom_series_to_nifti(folder, os.path.join(out_dir, patient_name + '.nii.gz'))
 
 
+def patientdcm2nifti(in_dir, filename):
+    '''
+    This function will be used to convert dicoms into nifti files after creating the groups with 
+    the number of slices that you want.
+    `in_dir`: the path to the folder where you have all the patients (folder of all the groups).
+    `out_dir`: the path to the output, which means where you want to save the converted nifties.
+    '''
+    path = os.path.join(in_dir, filename.split(".")[:-1] + '.nii.gz')
+    dicom2nifti.dicom_series_to_nifti(path)
+    return path
+
 def find_empy(in_dir):
     '''
     This function will help you to find the empty volumes that you may not need for your training
